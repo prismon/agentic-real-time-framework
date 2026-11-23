@@ -144,6 +144,9 @@ const (
 	Intent_ADD_METRICS Intent = 7
 	// Add extended content IDs
 	Intent_ADD_CIDS Intent = 8
+	// Add Agentic Audiences embeddings to BidRequest.user.data segments
+	// Uses DataPayload (content_data); each segment must include ext.aa
+	Intent_ADD_EMBEDDINGS Intent = 9
 )
 
 // Enum value maps for Intent.
@@ -158,6 +161,7 @@ var (
 		6: "BID_SHADE",
 		7: "ADD_METRICS",
 		8: "ADD_CIDS",
+		9: "ADD_EMBEDDINGS",
 	}
 	Intent_value = map[string]int32{
 		"INTENT_UNSPECIFIED": 0,
@@ -169,6 +173,7 @@ var (
 		"BID_SHADE":          6,
 		"ADD_METRICS":        7,
 		"ADD_CIDS":           8,
+		"ADD_EMBEDDINGS":     9,
 	}
 )
 
@@ -679,7 +684,8 @@ type Mutation_Metrics struct {
 }
 
 type Mutation_ContentData struct {
-	// Content data
+	// Content data (also used by ADD_EMBEDDINGS;
+	// each segment must include ext.aa — see OpenRTB Segment.ext.aa)
 	ContentData *DataPayload `protobuf:"bytes,104,opt,name=content_data,json=contentData,oneof"`
 }
 
@@ -1146,7 +1152,7 @@ const file_agenticrtbframework_proto_rawDesc = "" +
 	"\x15OPERATION_UNSPECIFIED\x10\x00\x12\x11\n" +
 	"\rOPERATION_ADD\x10\x01\x12\x14\n" +
 	"\x10OPERATION_REMOVE\x10\x02\x12\x15\n" +
-	"\x11OPERATION_REPLACE\x10\x03*\xc4\x01\n" +
+	"\x11OPERATION_REPLACE\x10\x03*\xd8\x01\n" +
 	"\x06Intent\x12\x16\n" +
 	"\x12INTENT_UNSPECIFIED\x10\x00\x12\x15\n" +
 	"\x11ACTIVATE_SEGMENTS\x10\x01\x12\x12\n" +
@@ -1156,7 +1162,8 @@ const file_agenticrtbframework_proto_rawDesc = "" +
 	"\x12ADJUST_DEAL_MARGIN\x10\x05\x12\r\n" +
 	"\tBID_SHADE\x10\x06\x12\x0f\n" +
 	"\vADD_METRICS\x10\a\x12\f\n" +
-	"\bADD_CIDS\x10\b\"\x06\b\xe8\a\x10\xcf\x0fb\beditionsp\xe8\a"
+	"\bADD_CIDS\x10\b\x12\x12\n" +
+	"\x0eADD_EMBEDDINGS\x10\t\"\x06\b\xe8\a\x10\xcf\x0fb\beditionsp\xe8\a"
 
 var (
 	file_agenticrtbframework_proto_rawDescOnce sync.Once

@@ -86,7 +86,7 @@ func (a *Agent) registerTools() {
 	extendRTBTool := mcp.NewTool("extend_rtb",
 		mcp.WithDescription("Process an OpenRTB bid request/response and return proposed mutations. "+
 			"Supports intents: ACTIVATE_SEGMENTS, ACTIVATE_DEALS, SUPPRESS_DEALS, ADJUST_DEAL_FLOOR, "+
-			"ADJUST_DEAL_MARGIN, BID_SHADE, ADD_METRICS, ADD_CIDS. "+
+			"ADJUST_DEAL_MARGIN, BID_SHADE, ADD_METRICS, ADD_CIDS, ADD_EMBEDDINGS. "+
 			"Use applicable_intents to filter which mutation types you want returned."),
 		mcp.WithString("id",
 			mcp.Required(),
@@ -111,7 +111,7 @@ func (a *Agent) registerTools() {
 		mcp.WithArray("applicable_intents",
 			mcp.Description("List of intents the agent is eligible to return. If omitted, all intents are applicable. "+
 				"Valid values: ACTIVATE_SEGMENTS, ACTIVATE_DEALS, SUPPRESS_DEALS, ADJUST_DEAL_FLOOR, "+
-				"ADJUST_DEAL_MARGIN, BID_SHADE, ADD_METRICS, ADD_CIDS"),
+				"ADJUST_DEAL_MARGIN, BID_SHADE, ADD_METRICS, ADD_CIDS, ADD_EMBEDDINGS"),
 		),
 		mcp.WithBoolean("federate",
 			mcp.Description("If true, also call configured federated GRPC endpoints and aggregate their mutations. Default: false."),
@@ -347,6 +347,8 @@ func parseIntent(s string) pb.Intent {
 		return pb.Intent_ADD_METRICS
 	case "ADD_CIDS":
 		return pb.Intent_ADD_CIDS
+	case "ADD_EMBEDDINGS":
+		return pb.Intent_ADD_EMBEDDINGS
 	default:
 		return pb.Intent_INTENT_UNSPECIFIED
 	}

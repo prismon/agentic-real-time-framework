@@ -290,6 +290,7 @@ var ValidIntents = []string{
 	"BID_SHADE",
 	"ADD_METRICS",
 	"ADD_CIDS",
+	"ADD_EMBEDDINGS",
 }
 
 func isValidIntent(intent string) bool {
